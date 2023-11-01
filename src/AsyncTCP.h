@@ -31,8 +31,9 @@ extern "C"
 #include "lwip/pbuf.h"
 }
 
-#define CONFIG_ASYNC_TCP_RUNNING_PRIORITY 2
-#define CONFIG_ASYNC_TCP_RUNNING_HEAP 3072
+#define CONFIG_ASYNC_TCP_RUNNING_PRIORITY 0
+#define CONFIG_ASYNC_TCP_RUNNING_HEAP 6140
+#define CONFIG_ASYNC_TCP_EV_QUEUE_SIZE 48
 
 // If core is not defined, then we are running in Arduino or PIO
 #ifndef CONFIG_ASYNC_TCP_RUNNING_CORE
@@ -45,6 +46,9 @@ extern "C"
 #endif
 #ifndef CONFIG_ASYNC_TCP_RUNNING_HEAP
 #define CONFIG_ASYNC_TCP_RUNNING_HEAP 8192 * 2
+#endif
+#ifndef CONFIG_ASYNC_TCP_EV_QUEUE_SIZE
+#define CONFIG_ASYNC_TCP_EV_QUEUE_SIZE 32
 #endif
 
 class AsyncClient;
