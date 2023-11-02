@@ -245,13 +245,9 @@ static void _handle_async_event(lwip_event_packet_t *e)
 
 static void _async_service_task(void *pvParameters)
 {
-    TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 28;
-
     lwip_event_packet_t *packet = NULL;
     for (;;)
     {
-        xLastWakeTime = xTaskGetTickCount();
         if (_get_async_event(&packet))
         {
 #if CONFIG_ASYNC_TCP_USE_WDT
@@ -268,7 +264,6 @@ static void _async_service_task(void *pvParameters)
             }
 #endif
         }
-        vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
     vTaskDelete(NULL);
     _async_service_task_handle = NULL;
