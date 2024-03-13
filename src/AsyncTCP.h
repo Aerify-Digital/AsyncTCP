@@ -31,9 +31,10 @@ extern "C"
 #include "lwip/pbuf.h"
 }
 
-#define CONFIG_ASYNC_TCP_RUNNING_PRIORITY 0
-#define CONFIG_ASYNC_TCP_RUNNING_HEAP 6140
-#define CONFIG_ASYNC_TCP_EV_QUEUE_SIZE 48
+#define CONFIG_ASYNC_TCP_RUNNING_PRIORITY 3
+#define CONFIG_ASYNC_TCP_RUNNING_HEAP 4096
+#define CONFIG_ASYNC_TCP_EV_QUEUE_SIZE 32
+#define CONFIG_ASYNC_TCP_TICK_SLEEP 16
 
 // If core is not defined, then we are running in Arduino or PIO
 #ifndef CONFIG_ASYNC_TCP_RUNNING_CORE

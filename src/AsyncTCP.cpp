@@ -245,9 +245,17 @@ static void _handle_async_event(lwip_event_packet_t *e)
 
 static void _async_service_task(void *pvParameters)
 {
+#if CONFIG_ASYNC_TCP_TICK_SLEEP > 0
+    TickType_t xLastWakeTime;
+    const TickType_t xFrequency = CONFIG_ASYNC_TCP_TICK_SLEEP;
+    xLastWakeTime = xTaskGetTickCount();
+#endif
     lwip_event_packet_t *packet = NULL;
     for (;;)
     {
+#if CONFIG_ASYNC_TCP_TICK_SLEEP > 0
+        vTaskDelayUntil(&xLastWakeTime, xFrequency);
+#endif
         if (_get_async_event(&packet))
         {
 #if CONFIG_ASYNC_TCP_USE_WDT
@@ -264,6 +272,9 @@ static void _async_service_task(void *pvParameters)
             }
 #endif
         }
+#if CONFIG_ASYNC_TCP_TICK_SLEEP > 0
+        vTaskDelay(1);
+#endif
     }
     vTaskDelete(NULL);
     _async_service_task_handle = NULL;
