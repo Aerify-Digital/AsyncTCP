@@ -272,9 +272,6 @@ static void _async_service_task(void *pvParameters)
             }
 #endif
         }
-#if CONFIG_ASYNC_TCP_TICK_SLEEP > 0
-        vTaskDelay(1);
-#endif
     }
     vTaskDelete(NULL);
     _async_service_task_handle = NULL;
